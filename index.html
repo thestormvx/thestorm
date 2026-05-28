@@ -1,245 +1,753 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rayyan | Storm</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Noto+Naskh+Arabic:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg: #0a0a0a;
-            --accent: #e5e5e5;
-            --text-muted: #888;
-            --glass: rgba(255, 255, 255, 0.03);
-        }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<title>RAYYAN — STORM</title>
 
-        body {
-            background-color: var(--bg);
-            color: var(--accent);
-            font-family: 'Noto Naskh Arabic', serif;
-            overflow-x: hidden;
-            line-height: 1.6;
-        }
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-        /* تأثير الخلفية الشتوية الهادئة */
-        .overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 50% 50%, #1a1a1a 0%, #0a0a0a 100%);
-            z-index: -1;
-        }
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 80px 20px;
-            text-align: center;
-        }
+<style>
 
-        /* الهوية الشخصية */
-        .profile-header {
-            margin-bottom: 50px;
-            opacity: 0;
-            animation: fadeIn 2s forwards;
-        }
+:root{
+    --bg:#050505;
+    --bg2:#090909;
 
-        .name-title {
-            font-family: 'Cinzel', serif; /* خط إنجليزي راقي */
-            font-size: 2.5rem;
-            letter-spacing: 5px;
-            text-transform: uppercase;
-            margin-bottom: 10px;
-        }
+    --card:rgba(13,13,13,0.72);
 
-        .alias {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            letter-spacing: 3px;
-            margin-bottom: 20px;
-        }
+    --border:rgba(255,255,255,0.06);
 
-        /* السيرة الذاتية */
-        .bio-section {
-            margin-bottom: 40px;
-            opacity: 0;
-            animation: fadeIn 2s forwards 0.5s;
-        }
+    --text:#f4f4f4;
+    --muted:#7d7d7d;
 
-        .bio-text {
-            font-size: 1.1rem;
-            color: var(--accent);
-            margin-bottom: 15px;
-        }
+    --glow:rgba(255,255,255,0.03);
+}
 
-        .english-sub {
-            font-family: 'Cinzel', serif;
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            display: block;
-            margin-top: 5px;
-        }
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-        /* الأقسام (تاريخك) */
-        .history-card {
-            background: var(--glass);
-            border: 1px solid rgba(255,255,255,0.05);
-            padding: 25px;
-            border-radius: 2px;
-            margin-bottom: 15px;
-            transition: 0.5s;
-            cursor: default;
-            text-align: right;
-        }
+html{
+    scroll-behavior:smooth;
+}
 
-        .history-card:hover {
-            background: rgba(255,255,255,0.07);
-            border-color: rgba(255,255,255,0.1);
-        }
+body{
+    background:var(--bg);
+    color:var(--text);
 
-        .card-tag {
-            font-size: 0.7rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-        }
+    font-family:'Inter',sans-serif;
 
-        /* الروابط */
-        .links-container {
-            margin-top: 50px;
-        }
+    overflow-x:hidden;
+}
 
-        .link-btn {
-            display: block;
-            padding: 15px;
-            margin-bottom: 15px;
-            border: 1px solid var(--accent);
-            color: var(--accent);
-            text-decoration: none;
-            font-size: 0.9rem;
-            letter-spacing: 2px;
-            transition: 0.4s;
-            position: relative;
-            overflow: hidden;
-        }
+/* ================================= */
+/* BACKGROUND */
+/* ================================= */
 
-        .link-btn:hover {
-            background: var(--accent);
-            color: var(--bg);
-        }
+.background{
+    position:fixed;
+    inset:0;
+    z-index:-10;
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+    background:
+    radial-gradient(circle at top center, rgba(255,255,255,0.03), transparent 35%),
+    radial-gradient(circle at bottom right, rgba(255,255,255,0.02), transparent 30%),
+    linear-gradient(to bottom,#050505,#080808,#050505);
 
-        .footer {
-            margin-top: 100px;
-            font-size: 0.7rem;
-            color: var(--text-muted);
-            letter-spacing: 2px;
-        }
+    overflow:hidden;
+}
 
-        /* لمسة الشتاء - جزيئات خفيفة جداً */
-        #snow {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none;
-            z-index: 0;
-        }
-    </style>
+/* NO GREEN / NO CYBER */
+
+.noise{
+    position:absolute;
+    inset:0;
+
+    opacity:.035;
+
+    background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cg fill='%23ffffff'%3E%3Ccircle cx='1' cy='1' r='1'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* ================================= */
+/* SNOW */
+/* ================================= */
+
+canvas{
+    position:fixed;
+    inset:0;
+
+    pointer-events:none;
+
+    z-index:-1;
+}
+
+/* ================================= */
+/* CONTAINER */
+/* ================================= */
+
+.container{
+    width:100%;
+    max-width:1150px;
+
+    margin:auto;
+
+    padding:30px 20px 120px;
+}
+
+/* ================================= */
+/* HERO */
+/* ================================= */
+
+.hero{
+    position:relative;
+
+    min-height:92vh;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:34px;
+
+    overflow:hidden;
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    backdrop-filter:blur(12px);
+
+    box-shadow:
+    inset 0 0 50px rgba(255,255,255,0.015),
+    0 20px 80px rgba(0,0,0,0.5);
+}
+
+.hero::before{
+    content:'';
+
+    position:absolute;
+    inset:0;
+
+    background:
+    linear-gradient(
+        135deg,
+        transparent,
+        rgba(255,255,255,0.015),
+        transparent
+    );
+
+    animation:shine 10s linear infinite;
+}
+
+@keyframes shine{
+
+    0%{
+        transform:translateX(-100%);
+    }
+
+    100%{
+        transform:translateX(100%);
+    }
+
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+
+    text-align:center;
+
+    max-width:850px;
+
+    padding:40px 20px;
+}
+
+.top-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:12px;
+
+    padding:12px 18px;
+
+    border-radius:999px;
+
+    border:1px solid rgba(255,255,255,0.06);
+
+    background:rgba(255,255,255,0.025);
+
+    color:#9f9f9f;
+
+    margin-bottom:35px;
+
+    backdrop-filter:blur(10px);
+}
+
+.dot{
+    width:8px;
+    height:8px;
+
+    border-radius:50%;
+
+    background:#ffffff;
+
+    opacity:.7;
+
+    animation:pulse 2s infinite;
+}
+
+@keyframes pulse{
+
+    0%,100%{
+        transform:scale(1);
+        opacity:.6;
+    }
+
+    50%{
+        transform:scale(1.7);
+        opacity:1;
+    }
+
+}
+
+.hero h1{
+    font-size:clamp(4rem,13vw,8rem);
+
+    font-weight:800;
+
+    line-height:1;
+
+    letter-spacing:-5px;
+
+    margin-bottom:25px;
+
+    color:white;
+}
+
+.hero p{
+    color:var(--muted);
+
+    font-size:1.08rem;
+
+    line-height:2;
+
+    max-width:720px;
+
+    margin:auto;
+}
+
+/* ================================= */
+/* TAGS */
+/* ================================= */
+
+.tags{
+    display:flex;
+
+    justify-content:center;
+    flex-wrap:wrap;
+
+    gap:14px;
+
+    margin-top:45px;
+}
+
+.tag{
+    padding:14px 22px;
+
+    border-radius:999px;
+
+    border:1px solid rgba(255,255,255,0.06);
+
+    background:rgba(255,255,255,0.025);
+
+    color:#d8d8d8;
+
+    font-size:.92rem;
+
+    transition:.35s ease;
+}
+
+.tag:hover{
+    transform:translateY(-5px);
+
+    background:rgba(255,255,255,0.05);
+
+    border-color:rgba(255,255,255,0.12);
+}
+
+/* ================================= */
+/* SECTIONS */
+/* ================================= */
+
+.section-title{
+    margin:90px 0 28px;
+
+    color:#7b7b7b;
+
+    letter-spacing:5px;
+
+    text-transform:uppercase;
+
+    font-size:.82rem;
+}
+
+/* ================================= */
+/* CARDS */
+/* ================================= */
+
+.cards{
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(290px,1fr));
+
+    gap:22px;
+}
+
+.card{
+    position:relative;
+
+    overflow:hidden;
+
+    border-radius:28px;
+
+    padding:32px;
+
+    background:var(--card);
+
+    border:1px solid rgba(255,255,255,0.05);
+
+    backdrop-filter:blur(14px);
+
+    transition:
+    transform .35s ease,
+    border-color .35s ease,
+    background .35s ease;
+}
+
+.card:hover{
+    transform:translateY(-8px);
+
+    border-color:rgba(255,255,255,0.12);
+
+    background:rgba(20,20,20,0.8);
+}
+
+.card::after{
+    content:'';
+
+    position:absolute;
+
+    width:180px;
+    height:180px;
+
+    border-radius:50%;
+
+    background:rgba(255,255,255,0.02);
+
+    filter:blur(60px);
+
+    top:-60px;
+    right:-60px;
+}
+
+.icon{
+    width:62px;
+    height:62px;
+
+    border-radius:18px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:rgba(255,255,255,0.03);
+
+    border:1px solid rgba(255,255,255,0.04);
+
+    font-size:1.4rem;
+
+    margin-bottom:28px;
+}
+
+.label{
+    color:#707070;
+
+    font-size:.8rem;
+
+    letter-spacing:3px;
+
+    text-transform:uppercase;
+
+    margin-bottom:12px;
+}
+
+.card h2{
+    font-size:2rem;
+
+    margin-bottom:15px;
+}
+
+.card p{
+    color:#949494;
+
+    line-height:1.9;
+}
+
+/* ================================= */
+/* SOCIALS */
+/* ================================= */
+
+.socials{
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+
+    gap:18px;
+
+    margin-top:15px;
+}
+
+.social{
+    position:relative;
+
+    overflow:hidden;
+
+    text-decoration:none;
+
+    color:white;
+
+    padding:30px;
+
+    border-radius:26px;
+
+    background:var(--card);
+
+    border:1px solid rgba(255,255,255,0.05);
+
+    backdrop-filter:blur(14px);
+
+    transition:.35s ease;
+}
+
+.social:hover{
+    transform:translateY(-7px);
+
+    border-color:rgba(255,255,255,0.12);
+
+    background:rgba(20,20,20,0.82);
+}
+
+.social-top{
+    color:#757575;
+
+    letter-spacing:3px;
+
+    font-size:.78rem;
+
+    margin-bottom:14px;
+}
+
+.social-bottom{
+    font-size:1.25rem;
+
+    font-weight:700;
+}
+
+/* ================================= */
+/* FOOTER */
+/* ================================= */
+
+.footer{
+    margin-top:110px;
+
+    text-align:center;
+
+    color:#5d5d5d;
+
+    font-size:.75rem;
+
+    letter-spacing:5px;
+}
+
+/* ================================= */
+/* MOBILE */
+/* ================================= */
+
+@media(max-width:768px){
+
+    .hero{
+        min-height:auto;
+        padding:80px 0;
+    }
+
+    .hero h1{
+        letter-spacing:-2px;
+    }
+
+    .hero p{
+        font-size:1rem;
+    }
+
+}
+
+</style>
 </head>
 <body>
 
-    <div class="overlay"></div>
-    <canvas id="snow"></canvas>
+<!-- BACKGROUND -->
 
-    <div class="container">
-        <header class="profile-header">
-            <h1 class="name-title">RAYYAN</h1>
-            <p class="alias">KNOWN AS STORM</p>
-        </header>
+<div class="background">
+    <div class="noise"></div>
+</div>
 
-       
-        <section class="bio-section">
-            <div class="bio-text">
-                مهتم؟.
-                <span class="english-sub">If you’re reading this you’re actually attracted to me… trust me, I know..</span>
+<!-- SNOW -->
+
+<canvas id="snow"></canvas>
+
+<div class="container">
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <div class="top-badge">
+                <div class="dot"></div>
+                DIGITAL PRESENCE
             </div>
-        </section>
 
-        <div class="history-card">
-            <span class="card-tag">who im?/من اناً</span>
-            <p>اسمي ريان معروف ب ستورم عمري  مب مهم بعطيك نبذه عني لاكن قريبا جدا!</p>
-            <p style="font-size: 0.8rem; color: var(--text-muted);">Amino Interests Agent before</p>
+            <h1>RAYYAN</h1>
+
+            <p>
+                Quiet presence.
+                Cold atmosphere.
+                Dark minimalism mixed with digital identity.
+                Built for elegance, not noise.
+            </p>
+
+            <div class="tags">
+                <div class="tag">STORM</div>
+                <div class="tag">IRAQ</div>
+                <div class="tag">DEVELOPER</div>
+                <div class="tag">MINDSET</div>
+                <div class="tag">ARCHIVE</div>
+            </div>
+
         </div>
 
-        
-        <div class="history-card">
-            <span class="card-tag">Mindset / Power / Money</span>
-            <p>أؤمن إن العقلية القوية تصنع كل شيء: القوة، المال، والهيبة. .</p>
-            <p style="font-size: 0.8rem; color: var(--text-muted);">Mindset first. Power follows. Money comes.</p>
-        </div>
+    </section>
 
-        <div class="links-container">
-            <a href="https://www.instagram.com/ncryptix/" class="link-btn">INSTAGRAM</a>
-            <a href="https://www.tiktok.com/@rr2xe?_r=1&_t=ZS-93joHRIA7c7" class="link-btn">TIKTOK</a>
-            <a href="https://t.me/ncryptix" class="link-btn">TELEGRAM</a>
-        </div>
+    <!-- SECTION -->
 
-
-        <footer class="footer">
-          MADE  BY THE STORM
-        </footer>
+    <div class="section-title">
+        Identity
     </div>
 
-    <script>
-        // تأثير الثلج الهادئ (Dark Snow)
-        const canvas = document.getElementById('snow');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+    <section class="cards">
 
-        let particles = [];
-        for(let i=0; i<50; i++) {
-            particles.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                r: Math.random() * 2,
-                d: Math.random() * 50
-            });
+        <div class="card">
+
+            <div class="icon">✦</div>
+
+            <div class="label">
+                Alias
+            </div>
+
+            <h2>Storm</h2>
+
+            <p>
+                Known online as Storm.
+                Calm outside.
+                Chaos inside.
+                Focused on aesthetics, technology and digital experiences.
+            </p>
+
+        </div>
+
+        <div class="card">
+
+            <div class="icon">❄</div>
+
+            <div class="label">
+                Philosophy
+            </div>
+
+            <h2>Mindset</h2>
+
+            <p>
+                Discipline builds presence.
+                Silence creates mystery.
+                Consistency creates power.
+            </p>
+
+        </div>
+
+        <div class="card">
+
+            <div class="icon">☾</div>
+
+            <div class="label">
+                Atmosphere
+            </div>
+
+            <h2>Winter Aura</h2>
+
+            <p>
+                Dark cinematic interface inspired by winter nights,
+                minimal luxury and quiet digital energy.
+            </p>
+
+        </div>
+
+    </section>
+
+    <!-- SOCIALS -->
+
+    <div class="section-title">
+        Network
+    </div>
+
+    <section class="socials">
+
+        <a href="https://instagram.com/ncryptix1"
+        class="social">
+
+            <div class="social-top">
+                INSTAGRAM
+            </div>
+
+            <div class="social-bottom">
+                @ncryptix
+            </div>
+
+        </a>
+
+        <a href="https://t.me/ncryptix"
+        class="social">
+
+            <div class="social-top">
+                TELEGRAM
+            </div>
+
+            <div class="social-bottom">
+                @ncryptix
+            </div>
+
+        </a>
+
+        <a href="https://www.tiktok.com/@ncryptix?_r=1&_t=ZS-96kHrcZFpto"
+        class="social">
+
+            <div class="social-top">
+                TIKTOK
+            </div>
+
+            <div class="social-bottom">
+                @ncryptix
+            </div>
+
+        </a>
+
+    </section>
+
+    <div class="footer">
+        MADE BY THE STORM
+    </div>
+
+</div>
+
+<script>
+
+/* ================================= */
+/* ULTRA SMOOTH SNOW */
+/* ================================= */
+
+const canvas = document.getElementById("snow");
+const ctx = canvas.getContext("2d");
+
+let width = canvas.width = window.innerWidth;
+let height = canvas.height = window.innerHeight;
+
+const flakes = [];
+const count = 140;
+
+for(let i=0;i<count;i++){
+
+    flakes.push({
+
+        x:Math.random()*width,
+        y:Math.random()*height,
+
+        r:Math.random()*2 + 0.2,
+
+        speed:Math.random()*0.6 + 0.15,
+
+        drift:(Math.random()-0.5)*0.35
+
+    });
+
+}
+
+function render(){
+
+    ctx.clearRect(0,0,width,height);
+
+    ctx.beginPath();
+
+    for(const f of flakes){
+
+        ctx.moveTo(f.x,f.y);
+
+        ctx.arc(f.x,f.y,f.r,0,Math.PI*2);
+
+    }
+
+    ctx.fillStyle = "rgba(255,255,255,0.45)";
+    ctx.fill();
+
+    update();
+
+    requestAnimationFrame(render);
+
+}
+
+function update(){
+
+    for(const f of flakes){
+
+        f.y += f.speed;
+        f.x += f.drift;
+
+        if(f.y > height){
+
+            f.y = -5;
+            f.x = Math.random()*width;
         }
 
-        function draw() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = "rgba(255, 255, 255, 0.2)";
-            ctx.beginPath();
-            for(let i=0; i<50; i++) {
-                let p = particles[i];
-                ctx.moveTo(p.x, p.y);
-                ctx.arc(p.x, p.y, p.r, 0, Math.PI*2, true);
-            }
-            ctx.fill();
-            update();
-        }
+        if(f.x > width) f.x = 0;
+        if(f.x < 0) f.x = width;
 
-        function update() {
-            for(let i=0; i<50; i++) {
-                let p = particles[i];
-                p.y += Math.cos(p.d) + 1;
-                p.x += Math.sin(p.d) * 0.5;
-                if(p.y > canvas.height) {
-                    particles[i] = {x: Math.random()*canvas.width, y: -10, r: p.r, d: p.d};
-                }
-            }
-        }
-        setInterval(draw, 33);
-    </script>
+    }
+
+}
+
+render();
+
+window.addEventListener("resize",()=>{
+
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+
+});
+
+</script>
+
 </body>
 </html>
