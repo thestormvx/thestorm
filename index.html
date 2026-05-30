@@ -169,6 +169,126 @@ canvas{
     padding:40px 20px;
 }
 
+/* ================================= */
+/* HERO VISUALS (AVATAR & MUSIC) */
+/* ================================= */
+
+.hero-visuals {
+    position: relative;
+    width: 160px;
+    height: 160px;
+    margin: 0 auto 35px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: heroFadeIn 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+}
+
+@keyframes heroFadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.ambient-glow {
+    position: absolute;
+    width: 140%;
+    height: 140%;
+    background: radial-gradient(circle, rgba(255,255,255,0.07) 0%, transparent 60%);
+    filter: blur(30px);
+    z-index: 0;
+    transition: opacity 0.8s ease, transform 0.2s ease-out;
+}
+
+.avatar-wrapper {
+    position: relative;
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    z-index: 1;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.02));
+    box-shadow: 0 0 40px rgba(0,0,0,0.8), 0 0 20px rgba(255,255,255,0.03);
+    transition: transform 0.2s ease-out;
+}
+
+.avatar-wrapper::after {
+    content: '';
+    position: absolute;
+    inset: 1px;
+    border-radius: 50%;
+    /* الإطار الداخلي لدمج الصورة مع الظلام */
+    box-shadow: inset 0 0 22px rgba(5,5,5, 0.9); 
+    pointer-events: none;
+}
+
+.hero-avatar {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    filter: grayscale(15%) contrast(1.1);
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s ease;
+}
+
+.hero-visuals:hover .hero-avatar {
+    transform: scale(1.03);
+    filter: grayscale(0%) contrast(1.05);
+}
+
+.hero-visuals:hover .ambient-glow {
+    opacity: 0.9;
+}
+
+.floating-music-btn {
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(12, 12, 12, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    color: #c4c4c4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.7), inset 0 1px 1px rgba(255,255,255,0.05);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.floating-music-btn:hover {
+    background: rgba(20, 20, 20, 0.7);
+    border-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    transform: translateX(-50%) scale(1.08);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.9), 0 0 15px rgba(255,255,255,0.03), inset 0 1px 1px rgba(255,255,255,0.1);
+}
+
+.floating-music-btn:active {
+    transform: translateX(-50%) scale(0.95);
+}
+
+.play-icon {
+    margin-left: 2px;
+}
+
+.play-icon.playing {
+    margin-left: 0;
+    font-size: 0.65rem;
+}
+
+/* ================================= */
+
 .top-badge{
     display:inline-flex;
     align-items:center;
@@ -500,23 +620,28 @@ canvas{
 </head>
 <body>
 
-<!-- BACKGROUND -->
-
 <div class="background">
     <div class="noise"></div>
 </div>
-
-<!-- SNOW -->
 
 <canvas id="snow"></canvas>
 
 <div class="container">
 
-    <!-- HERO -->
-
     <section class="hero">
 
         <div class="hero-content">
+
+            <div class="hero-visuals">
+                <div class="ambient-glow"></div>
+                <div class="avatar-wrapper">
+                    <img src="profile.jpg" alt="Storm Avatar" class="hero-avatar">
+                </div>
+                <button id="luxury-music-trigger" class="floating-music-btn">
+                    <span class="play-icon">▶</span>
+                </button>
+                <audio id="luxury-audio" src="music.mp3" loop></audio>
+            </div>
 
             <div class="top-badge">
                 <div class="dot"></div>
@@ -543,8 +668,6 @@ canvas{
         </div>
 
     </section>
-
-    <!-- SECTION -->
 
     <div class="section-title">
         Identity
@@ -608,8 +731,6 @@ canvas{
 
     </section>
 
-    <!-- SOCIALS -->
-
     <div class="section-title">
         Network
     </div>
@@ -624,7 +745,7 @@ canvas{
             </div>
 
             <div class="social-bottom">
-                @ncryptix
+                @ncryptix1
             </div>
 
         </a>
@@ -642,7 +763,7 @@ canvas{
 
         </a>
 
-        <a href="https://www.tiktok.com/@ncryptix?_r=1&_t=ZS-96kHrcZFpto"
+        <a href="https://www.tiktok.com/@ncryptix?_r=1&_t=ZS-96n8kMO1oTC"
         class="social">
 
             <div class="social-top">
@@ -650,7 +771,7 @@ canvas{
             </div>
 
             <div class="social-bottom">
-                @ncryptix
+                @nceyptix
             </div>
 
         </a>
@@ -745,6 +866,63 @@ window.addEventListener("resize",()=>{
     width = canvas.width = window.innerWidth;
     height = canvas.height = window.innerHeight;
 
+});
+
+/* ================================= */
+/* LUXURY AUDIO & PARALLAX EFFECT */
+/* ================================= */
+
+const musicTrigger = document.getElementById('luxury-music-trigger');
+const playIcon = musicTrigger.querySelector('.play-icon');
+const luxuryAudio = document.getElementById('luxury-audio');
+const heroSection = document.querySelector('.hero');
+const avatarWrapper = document.querySelector('.avatar-wrapper');
+const ambientGlow = document.querySelector('.ambient-glow');
+
+// Toggle Music
+musicTrigger.addEventListener('click', () => {
+    if (luxuryAudio.paused) {
+        luxuryAudio.play();
+        playIcon.innerHTML = '❚❚';
+        playIcon.classList.add('playing');
+    } else {
+        luxuryAudio.pause();
+        playIcon.innerHTML = '▶';
+        playIcon.classList.remove('playing');
+    }
+});
+
+// Soft Parallax Effect
+heroSection.addEventListener('mousemove', (e) => {
+    const rect = heroSection.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    
+    // Calculate subtle movement
+    const moveX = (x - centerX) / 45;
+    const moveY = (y - centerY) / 45;
+
+    avatarWrapper.style.transform = `translate(${moveX}px, ${moveY}px)`;
+    ambientGlow.style.transform = `translate(${moveX * 1.5}px, ${moveY * 1.5}px)`;
+});
+
+// Reset Position on Mouse Leave
+heroSection.addEventListener('mouseleave', () => {
+    avatarWrapper.style.transform = `translate(0, 0)`;
+    ambientGlow.style.transform = `translate(0, 0)`;
+    
+    // Smooth return
+    avatarWrapper.style.transition = `transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)`;
+    ambientGlow.style.transition = `transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease`;
+});
+
+// Remove transition during movement for snappy response
+heroSection.addEventListener('mouseenter', () => {
+    avatarWrapper.style.transition = `none`;
+    ambientGlow.style.transition = `opacity 0.8s ease`;
 });
 
 </script>
