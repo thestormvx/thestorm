@@ -63,8 +63,6 @@ body{
     overflow:hidden;
 }
 
-/* NO GREEN / NO CYBER */
-
 .noise{
     position:absolute;
     inset:0;
@@ -147,15 +145,8 @@ canvas{
 }
 
 @keyframes shine{
-
-    0%{
-        transform:translateX(-100%);
-    }
-
-    100%{
-        transform:translateX(100%);
-    }
-
+    0%{ transform:translateX(-100%); }
+    100%{ transform:translateX(100%); }
 }
 
 .hero-content{
@@ -170,14 +161,14 @@ canvas{
 }
 
 /* ================================= */
-/* HERO VISUALS (AVATAR & MUSIC) */
+/* HERO VISUALS (AVATAR & ENERGY GLOW) */
 /* ================================= */
 
 .hero-visuals {
     position: relative;
     width: 160px;
     height: 160px;
-    margin: 0 auto 35px auto;
+    margin: 0 auto 40px auto;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -193,35 +184,57 @@ canvas{
     }
 }
 
+/* التوهج الخلفي المتحرك (Energy Aura) */
 .ambient-glow {
     position: absolute;
     width: 140%;
     height: 140%;
-    background: radial-gradient(circle, rgba(255,255,255,0.07) 0%, transparent 60%);
-    filter: blur(30px);
+    background: radial-gradient(circle, rgba(160, 160, 160, 0.15) 0%, transparent 65%);
+    filter: blur(25px);
     z-index: 0;
-    transition: opacity 0.8s ease, transform 0.2s ease-out;
+    animation: breatheGlow 4s infinite alternate ease-in-out;
 }
 
+@keyframes breatheGlow {
+    0% { opacity: 0.5; transform: scale(0.95); }
+    100% { opacity: 1; transform: scale(1.05); }
+}
+
+/* إطار الصورة مع النبض الرمادي الفخم */
 .avatar-wrapper {
     position: relative;
     width: 140px;
     height: 140px;
     border-radius: 50%;
     z-index: 1;
-    padding: 1px;
-    background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.02));
-    box-shadow: 0 0 40px rgba(0,0,0,0.8), 0 0 20px rgba(255,255,255,0.03);
-    transition: transform 0.2s ease-out;
+    padding: 2px;
+    background: linear-gradient(135deg, #666, #111);
+    animation: energyPulse 4s infinite alternate ease-in-out;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes energyPulse {
+    0% {
+        box-shadow: 
+            0 0 15px rgba(180, 180, 180, 0.15),
+            0 0 30px rgba(120, 120, 120, 0.05),
+            inset 0 0 10px rgba(255, 255, 255, 0.1);
+    }
+    100% {
+        box-shadow: 
+            0 0 30px rgba(220, 220, 220, 0.3),
+            0 0 60px rgba(150, 150, 150, 0.15),
+            inset 0 0 20px rgba(255, 255, 255, 0.2);
+    }
 }
 
 .avatar-wrapper::after {
     content: '';
     position: absolute;
-    inset: 1px;
+    inset: 2px;
     border-radius: 50%;
-    /* الإطار الداخلي لدمج الصورة مع الظلام */
-    box-shadow: inset 0 0 22px rgba(5,5,5, 0.9); 
+    box-shadow: inset 0 0 25px rgba(0,0,0, 0.95); 
+    border: 1px solid rgba(255, 255, 255, 0.05);
     pointer-events: none;
 }
 
@@ -230,135 +243,114 @@ canvas{
     height: 100%;
     border-radius: 50%;
     object-fit: cover;
-    filter: grayscale(15%) contrast(1.1);
-    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s ease;
+    filter: grayscale(15%) contrast(1.1) brightness(0.95);
+    transition: filter 0.8s ease;
 }
 
+/* تأثير بسيط جداً للون الصورة عند التمرير دون زيادة التوهج */
 .hero-visuals:hover .hero-avatar {
-    transform: scale(1.03);
-    filter: grayscale(0%) contrast(1.05);
+    filter: grayscale(0%) contrast(1.05) brightness(1);
 }
 
-.hero-visuals:hover .ambient-glow {
-    opacity: 0.9;
-}
+/* ================================= */
+/* BADGE & INTEGRATED MUSIC PLAYER */
+/* ================================= */
 
-.floating-music-btn {
-    position: absolute;
-    bottom: -6px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 2;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: rgba(12, 12, 12, 0.5);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+.top-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    padding: 10px 22px;
+    border-radius: 999px;
+    border: 1px solid rgba(200, 200, 200, 0.15);
+    background: rgba(20, 20, 20, 0.65);
+    color: #c4c4c4;
+    margin-bottom: 35px;
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    color: #c4c4c4;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6), inset 0 1px 1px rgba(255,255,255,0.05);
+    transition: border-color 0.35s ease, transform 0.35s ease, background 0.35s ease;
+}
+
+.top-badge:hover {
+    border-color: rgba(220, 220, 220, 0.3);
+    background: rgba(30, 30, 30, 0.8);
+    transform: translateY(-2px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.8), inset 0 1px 1px rgba(255,255,255,0.1);
+}
+
+.music-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.badge-btn {
+    background: none;
+    border: none;
+    color: #888;
+    cursor: pointer;
+    font-size: 0.8rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.75rem;
-    cursor: pointer;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.7), inset 0 1px 1px rgba(255,255,255,0.05);
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: color 0.3s ease, text-shadow 0.3s ease, transform 0.2s ease;
 }
 
-.floating-music-btn:hover {
-    background: rgba(20, 20, 20, 0.7);
-    border-color: rgba(255, 255, 255, 0.2);
+.badge-btn:hover {
     color: #fff;
-    transform: translateX(-50%) scale(1.08);
-    box-shadow: 0 12px 25px rgba(0,0,0,0.9), 0 0 15px rgba(255,255,255,0.03), inset 0 1px 1px rgba(255,255,255,0.1);
+    text-shadow: 0 0 10px rgba(255,255,255,0.8);
+    transform: scale(1.15);
 }
 
-.floating-music-btn:active {
-    transform: translateX(-50%) scale(0.95);
+.badge-separator {
+    width: 1px;
+    height: 14px;
+    background: rgba(255, 255, 255, 0.15);
 }
 
-.play-icon {
-    margin-left: 2px;
+.badge-text {
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+    font-weight: 500;
 }
 
-.play-icon.playing {
-    margin-left: 0;
-    font-size: 0.65rem;
+.track-dots {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.track-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #444;
+    transition: all 0.3s ease;
+}
+
+.track-dot.active {
+    background: #fff;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.9);
+    transform: scale(1.2);
 }
 
 /* ================================= */
 
-.top-badge{
-    display:inline-flex;
-    align-items:center;
-    gap:12px;
-
-    padding:12px 18px;
-
-    border-radius:999px;
-
-    border:1px solid rgba(255,255,255,0.06);
-
-    background:rgba(255,255,255,0.025);
-
-    color:#9f9f9f;
-
-    margin-bottom:35px;
-
-    backdrop-filter:blur(10px);
-}
-
-.dot{
-    width:8px;
-    height:8px;
-
-    border-radius:50%;
-
-    background:#ffffff;
-
-    opacity:.7;
-
-    animation:pulse 2s infinite;
-}
-
-@keyframes pulse{
-
-    0%,100%{
-        transform:scale(1);
-        opacity:.6;
-    }
-
-    50%{
-        transform:scale(1.7);
-        opacity:1;
-    }
-
-}
-
 .hero h1{
     font-size:clamp(4rem,13vw,8rem);
-
     font-weight:800;
-
     line-height:1;
-
     letter-spacing:-5px;
-
     margin-bottom:25px;
-
     color:white;
 }
 
 .hero p{
     color:var(--muted);
-
     font-size:1.08rem;
-
     line-height:2;
-
     max-width:720px;
-
     margin:auto;
 }
 
@@ -368,36 +360,25 @@ canvas{
 
 .tags{
     display:flex;
-
     justify-content:center;
     flex-wrap:wrap;
-
     gap:14px;
-
     margin-top:45px;
 }
 
 .tag{
     padding:14px 22px;
-
     border-radius:999px;
-
     border:1px solid rgba(255,255,255,0.06);
-
     background:rgba(255,255,255,0.025);
-
     color:#d8d8d8;
-
     font-size:.92rem;
-
     transition:.35s ease;
 }
 
 .tag:hover{
     transform:translateY(-5px);
-
     background:rgba(255,255,255,0.05);
-
     border-color:rgba(255,255,255,0.12);
 }
 
@@ -407,13 +388,9 @@ canvas{
 
 .section-title{
     margin:90px 0 28px;
-
     color:#7b7b7b;
-
     letter-spacing:5px;
-
     text-transform:uppercase;
-
     font-size:.82rem;
 }
 
@@ -423,55 +400,35 @@ canvas{
 
 .cards{
     display:grid;
-
     grid-template-columns:repeat(auto-fit,minmax(290px,1fr));
-
     gap:22px;
 }
 
 .card{
     position:relative;
-
     overflow:hidden;
-
     border-radius:28px;
-
     padding:32px;
-
     background:var(--card);
-
     border:1px solid rgba(255,255,255,0.05);
-
     backdrop-filter:blur(14px);
-
-    transition:
-    transform .35s ease,
-    border-color .35s ease,
-    background .35s ease;
+    transition: transform .35s ease, border-color .35s ease, background .35s ease;
 }
 
 .card:hover{
     transform:translateY(-8px);
-
     border-color:rgba(255,255,255,0.12);
-
     background:rgba(20,20,20,0.8);
 }
 
 .card::after{
     content:'';
-
     position:absolute;
-
     width:180px;
     height:180px;
-
     border-radius:50%;
-
     background:rgba(255,255,255,0.02);
-
     filter:blur(60px);
-
     top:-60px;
     right:-60px;
 }
@@ -479,43 +436,31 @@ canvas{
 .icon{
     width:62px;
     height:62px;
-
     border-radius:18px;
-
     display:flex;
     align-items:center;
     justify-content:center;
-
     background:rgba(255,255,255,0.03);
-
     border:1px solid rgba(255,255,255,0.04);
-
     font-size:1.4rem;
-
     margin-bottom:28px;
 }
 
 .label{
     color:#707070;
-
     font-size:.8rem;
-
     letter-spacing:3px;
-
     text-transform:uppercase;
-
     margin-bottom:12px;
 }
 
 .card h2{
     font-size:2rem;
-
     margin-bottom:15px;
 }
 
 .card p{
     color:#949494;
-
     line-height:1.9;
 }
 
@@ -525,57 +470,39 @@ canvas{
 
 .socials{
     display:grid;
-
     grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-
     gap:18px;
-
     margin-top:15px;
 }
 
 .social{
     position:relative;
-
     overflow:hidden;
-
     text-decoration:none;
-
     color:white;
-
     padding:30px;
-
     border-radius:26px;
-
     background:var(--card);
-
     border:1px solid rgba(255,255,255,0.05);
-
     backdrop-filter:blur(14px);
-
     transition:.35s ease;
 }
 
 .social:hover{
     transform:translateY(-7px);
-
     border-color:rgba(255,255,255,0.12);
-
     background:rgba(20,20,20,0.82);
 }
 
 .social-top{
     color:#757575;
-
     letter-spacing:3px;
-
     font-size:.78rem;
-
     margin-bottom:14px;
 }
 
 .social-bottom{
     font-size:1.25rem;
-
     font-weight:700;
 }
 
@@ -585,13 +512,9 @@ canvas{
 
 .footer{
     margin-top:110px;
-
     text-align:center;
-
     color:#5d5d5d;
-
     font-size:.75rem;
-
     letter-spacing:5px;
 }
 
@@ -600,20 +523,23 @@ canvas{
 /* ================================= */
 
 @media(max-width:768px){
-
     .hero{
         min-height:auto;
         padding:80px 0;
     }
-
     .hero h1{
         letter-spacing:-2px;
     }
-
     .hero p{
         font-size:1rem;
     }
-
+    .top-badge {
+        padding: 10px 16px;
+        gap: 10px;
+    }
+    .badge-text {
+        font-size: 0.65rem;
+    }
 }
 
 </style>
@@ -637,15 +563,29 @@ canvas{
                 <div class="avatar-wrapper">
                     <img src="profile.jpg" alt="Storm Avatar" class="hero-avatar">
                 </div>
-                <button id="luxury-music-trigger" class="floating-music-btn">
-                    <span class="play-icon">▶</span>
-                </button>
-                <audio id="luxury-audio" src="music.mp3" loop></audio>
+                
+                <audio class="luxury-track" src="music1.mp3" loop></audio>
+                <audio class="luxury-track" src="music2.mp3" loop></audio>
+                <audio class="luxury-track" src="music3.mp3" loop></audio>
             </div>
 
             <div class="top-badge">
-                <div class="dot"></div>
-                DIGITAL PRESENCE
+                <div class="music-controls">
+                    <button id="play-pause-btn" class="badge-btn">▶</button>
+                    <button id="next-btn" class="badge-btn">⏭</button>
+                </div>
+                
+                <div class="badge-separator"></div>
+                
+                <span class="badge-text">DIGITAL PRESENCE</span>
+                
+                <div class="badge-separator"></div>
+
+                <div class="track-dots">
+                    <span class="track-dot active"></span>
+                    <span class="track-dot"></span>
+                    <span class="track-dot"></span>
+                </div>
             </div>
 
             <h1>RAYYAN</h1>
@@ -662,7 +602,7 @@ canvas{
                 <div class="tag">IRAQ</div>
                 <div class="tag">DEVELOPER</div>
                 <div class="tag">MINDSET</div>
-                <div class="tag">ARCHIVE</div>
+                <div class="tag">KURDISH</div>
             </div>
 
         </div>
@@ -676,57 +616,31 @@ canvas{
     <section class="cards">
 
         <div class="card">
-
             <div class="icon">✦</div>
-
-            <div class="label">
-                Alias
-            </div>
-
+            <div class="label">Alias</div>
             <h2>Storm</h2>
-
             <p>
-                Known online as Storm.
-                Calm outside.
-                Chaos inside.
+                Known online as Storm. Calm outside. Chaos inside.
                 Focused on aesthetics, technology and digital experiences.
             </p>
-
         </div>
 
         <div class="card">
-
             <div class="icon">❄</div>
-
-            <div class="label">
-                Philosophy
-            </div>
-
+            <div class="label">Philosophy</div>
             <h2>Mindset</h2>
-
             <p>
-                Discipline builds presence.
-                Silence creates mystery.
-                Consistency creates power.
+                Discipline builds presence. Silence creates mystery. Consistency creates power.
             </p>
-
         </div>
 
         <div class="card">
-
             <div class="icon">☾</div>
-
-            <div class="label">
-                Atmosphere
-            </div>
-
+            <div class="label">Atmosphere</div>
             <h2>Winter Aura</h2>
-
             <p>
-                Dark cinematic interface inspired by winter nights,
-                minimal luxury and quiet digital energy.
+                Dark cinematic interface inspired by winter nights, minimal luxury and quiet digital energy.
             </p>
-
         </div>
 
     </section>
@@ -737,43 +651,19 @@ canvas{
 
     <section class="socials">
 
-        <a href="https://instagram.com/ncryptix1"
-        class="social">
-
-            <div class="social-top">
-                INSTAGRAM
-            </div>
-
-            <div class="social-bottom">
-                @ncryptix1
-            </div>
-
+        <a href="https://www.instagram.com/ncryptix1?igsh=dWtiazFxdndiOXFr" class="social">
+            <div class="social-top">INSTAGRAM</div>
+            <div class="social-bottom">@ncryptix1</div>
         </a>
 
-        <a href="https://t.me/ncryptix"
-        class="social">
-
-            <div class="social-top">
-                TELEGRAM
-            </div>
-
-            <div class="social-bottom">
-                @ncryptix
-            </div>
-
+        <a href="https://t.me/ncryptix" class="social">
+            <div class="social-top">TELEGRAM</div>
+            <div class="social-bottom">@ncryptix</div>
         </a>
 
-        <a href="https://www.tiktok.com/@ncryptix?_r=1&_t=ZS-96n8kMO1oTC"
-        class="social">
-
-            <div class="social-top">
-                TIKTOK
-            </div>
-
-            <div class="social-bottom">
-                @nceyptix
-            </div>
-
+        <a href="https://www.tiktok.com/@ncryptix?_r=1&_t=ZS-96vbxjhPp71" class="social">
+            <div class="social-top">TIKTOK</div>
+            <div class="social-bottom">@ncryptix</div>
         </a>
 
     </section>
@@ -800,99 +690,98 @@ const flakes = [];
 const count = 140;
 
 for(let i=0;i<count;i++){
-
     flakes.push({
-
         x:Math.random()*width,
         y:Math.random()*height,
-
         r:Math.random()*2 + 0.2,
-
         speed:Math.random()*0.6 + 0.15,
-
         drift:(Math.random()-0.5)*0.35
-
     });
-
 }
 
 function render(){
-
     ctx.clearRect(0,0,width,height);
-
     ctx.beginPath();
-
     for(const f of flakes){
-
         ctx.moveTo(f.x,f.y);
-
         ctx.arc(f.x,f.y,f.r,0,Math.PI*2);
-
     }
-
     ctx.fillStyle = "rgba(255,255,255,0.45)";
     ctx.fill();
-
     update();
-
     requestAnimationFrame(render);
-
 }
 
 function update(){
-
     for(const f of flakes){
-
         f.y += f.speed;
         f.x += f.drift;
-
         if(f.y > height){
-
             f.y = -5;
             f.x = Math.random()*width;
         }
-
         if(f.x > width) f.x = 0;
         if(f.x < 0) f.x = width;
-
     }
-
 }
 
 render();
 
 window.addEventListener("resize",()=>{
-
     width = canvas.width = window.innerWidth;
     height = canvas.height = window.innerHeight;
-
 });
 
 /* ================================= */
-/* LUXURY AUDIO & PARALLAX EFFECT */
+/* 3-TRACK MUSIC PLAYER LOGIC */
 /* ================================= */
-
-const musicTrigger = document.getElementById('luxury-music-trigger');
-const playIcon = musicTrigger.querySelector('.play-icon');
-const luxuryAudio = document.getElementById('luxury-audio');
-const heroSection = document.querySelector('.hero');
+const playPauseBtn = document.getElementById('play-pause-btn');
+const nextBtn = document.getElementById('next-btn');
+const tracks = document.querySelectorAll('.luxury-track');
+const dots = document.querySelectorAll('.track-dot');
 const avatarWrapper = document.querySelector('.avatar-wrapper');
 const ambientGlow = document.querySelector('.ambient-glow');
+const heroSection = document.querySelector('.hero');
 
-// Toggle Music
-musicTrigger.addEventListener('click', () => {
-    if (luxuryAudio.paused) {
-        luxuryAudio.play();
-        playIcon.innerHTML = '❚❚';
-        playIcon.classList.add('playing');
-    } else {
-        luxuryAudio.pause();
-        playIcon.innerHTML = '▶';
-        playIcon.classList.remove('playing');
+let currentTrackIndex = 0;
+let isPlaying = false;
+
+function updatePlayerUI() {
+    dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === currentTrackIndex);
+    });
+    playPauseBtn.innerHTML = isPlaying ? '❚❚' : '▶';
+}
+
+function playTrack(index) {
+    tracks.forEach(track => track.pause()); 
+    tracks[index].currentTime = 0;
+    
+    if (isPlaying) {
+        tracks[index].play();
     }
+    updatePlayerUI();
+}
+
+playPauseBtn.addEventListener('click', () => {
+    isPlaying = !isPlaying;
+    if (isPlaying) {
+        tracks[currentTrackIndex].play();
+    } else {
+        tracks[currentTrackIndex].pause();
+    }
+    updatePlayerUI();
 });
 
-// Soft Parallax Effect
+nextBtn.addEventListener('click', () => {
+    currentTrackIndex = (currentTrackIndex + 1) % tracks.length;
+    playTrack(currentTrackIndex);
+});
+
+/* ================================= */
+/* SOFT PARALLAX EFFECT */
+/* ================================= */
+
 heroSection.addEventListener('mousemove', (e) => {
     const rect = heroSection.getBoundingClientRect();
     const x = e.clientX - rect.left;
@@ -901,7 +790,6 @@ heroSection.addEventListener('mousemove', (e) => {
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
     
-    // Calculate subtle movement
     const moveX = (x - centerX) / 45;
     const moveY = (y - centerY) / 45;
 
@@ -909,17 +797,14 @@ heroSection.addEventListener('mousemove', (e) => {
     ambientGlow.style.transform = `translate(${moveX * 1.5}px, ${moveY * 1.5}px)`;
 });
 
-// Reset Position on Mouse Leave
 heroSection.addEventListener('mouseleave', () => {
     avatarWrapper.style.transform = `translate(0, 0)`;
     ambientGlow.style.transform = `translate(0, 0)`;
     
-    // Smooth return
     avatarWrapper.style.transition = `transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)`;
     ambientGlow.style.transition = `transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease`;
 });
 
-// Remove transition during movement for snappy response
 heroSection.addEventListener('mouseenter', () => {
     avatarWrapper.style.transition = `none`;
     ambientGlow.style.transition = `opacity 0.8s ease`;
