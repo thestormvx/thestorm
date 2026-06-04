@@ -778,37 +778,6 @@ nextBtn.addEventListener('click', () => {
     playTrack(currentTrackIndex);
 });
 
-/* ================================= */
-/* SOFT PARALLAX EFFECT */
-/* ================================= */
-
-heroSection.addEventListener('mousemove', (e) => {
-    const rect = heroSection.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-    
-    const moveX = (x - centerX) / 45;
-    const moveY = (y - centerY) / 45;
-
-    avatarWrapper.style.transform = `translate(${moveX}px, ${moveY}px)`;
-    ambientGlow.style.transform = `translate(${moveX * 1.5}px, ${moveY * 1.5}px)`;
-});
-
-heroSection.addEventListener('mouseleave', () => {
-    avatarWrapper.style.transform = `translate(0, 0)`;
-    ambientGlow.style.transform = `translate(0, 0)`;
-    
-    avatarWrapper.style.transition = `transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)`;
-    ambientGlow.style.transition = `transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease`;
-});
-
-heroSection.addEventListener('mouseenter', () => {
-    avatarWrapper.style.transition = `none`;
-    ambientGlow.style.transition = `opacity 0.8s ease`;
-});
 
 </script>
 
